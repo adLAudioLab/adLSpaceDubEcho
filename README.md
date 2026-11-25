@@ -86,3 +86,21 @@ Ces commandes décrivent la procédure prévue par la configuration actuelle ; e
 ### État du projet
 
 Le code source est disponible dans ce dépôt. Aucune version binaire téléchargeable ni licence open source définitive n'a encore été ajoutée. En l'absence de licence publiée, il ne faut pas présumer d'une autorisation de réutilisation ou de redistribution du code.
+
+## License / Licence
+
+### English
+
+adLSpaceDubEcho is licensed under the GNU Affero General Public License v3.0 (AGPLv3).
+
+This project uses JUCE, licensed under AGPLv3 or a commercial license.
+
+See [LICENSE](LICENSE) for the full license text.
+
+### Français
+
+adLSpaceDubEcho est distribué sous licence GNU Affero General Public License v3.0 (AGPLv3).
+
+Ce projet utilise JUCE, disponible sous licence AGPLv3 ou sous licence commerciale.
+
+Consultez le fichier [LICENSE](LICENSE) pour le texte intégral de la licence.
