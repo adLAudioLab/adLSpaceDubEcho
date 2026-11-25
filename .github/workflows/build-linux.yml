@@ -1,0 +1,44 @@
+name: Build Linux x86_64
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build pkg-config libasound2-dev libjack-jackd2-dev libfreetype6-dev libfontconfig1-dev libx11-dev libxcomposite-dev libxcursor-dev libxext-dev libxinerama-dev libxrandr-dev libxrender-dev libgl1-mesa-dev libglu1-mesa-dev
+      - name: Fetch dependencies
+        run: |
+          git clone --depth 1 --branch 9.0.4 https://github.com/juce-framework/JUCE.git "$RUNNER_TEMP/JUCE"
+          git clone https://github.com/free-audio/clap-juce-extensions.git "$RUNNER_TEMP/clap-juce-extensions"
+          git -C "$RUNNER_TEMP/clap-juce-extensions" checkout 3837f4a6ed2ab0ba46aba69ae5b7041c7c64ce74
+          git -C "$RUNNER_TEMP/clap-juce-extensions" submodule update --init --recursive
+      - name: Configure
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DJUCE_PATH="$RUNNER_TEMP/JUCE" -DCLAP_JUCE_EXTENSIONS_PATH="$RUNNER_TEMP/clap-juce-extensions"
+      - name: Build all formats
+        run: cmake --build build --parallel 2 --target adLSpaceDubEcho_VST3 adLSpaceDubEcho_CLAP adLSpaceDubEcho_Standalone
+      - name: Package Linux binaries
+        run: |
+          set -euo pipefail
+          root="$PWD/build/adLSpaceDubEcho_artefacts/Release"
+          mkdir -p packages
+          test -d "$root/VST3/adLSpaceDubEcho.vst3"
+          test -f "$root/CLAP/adLSpaceDubEcho.clap"
+          test -x "$root/Standalone/adLSpaceDubEcho"
+          tar -czf packages/adLSpaceDubEcho_V0.1.16_Linux_x86_64_VST3.tar.gz -C "$root/VST3" adLSpaceDubEcho.vst3
+          tar -czf packages/adLSpaceDubEcho_V0.1.16_Linux_x86_64_CLAP.tar.gz -C "$root/CLAP" adLSpaceDubEcho.clap
+          tar -czf packages/adLSpaceDubEcho_V0.1.16_Linux_x86_64_Standalone.tar.gz -C "$root/Standalone" adLSpaceDubEcho
+      - uses: actions/upload-artifact@v4
+        with:
+          name: adLSpaceDubEcho_V0.1.16_Linux_x86_64
+          path: packages/*.tar.gz
+          if-no-files-found: error
