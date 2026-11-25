@@ -1,10 +1,13 @@
 cmake_minimum_required(VERSION 3.22)
 project(adLSpaceDubEcho VERSION 0.1.0)
 
-if(NOT EXISTS "C:/AudioDev/JUCE/CMakeLists.txt")
-    message(FATAL_ERROR "JUCE not found at C:/AudioDev/JUCE. Edit the JUCE path in CMakeLists.txt.")
+set(JUCE_PATH "C:/AudioDev/JUCE" CACHE PATH "Path to JUCE source directory")
+
+if(NOT EXISTS "${JUCE_PATH}/CMakeLists.txt")
+    message(FATAL_ERROR "JUCE not found at ${JUCE_PATH}. Specify -DJUCE_PATH=<path>.")
 endif()
-add_subdirectory("C:/AudioDev/JUCE" JUCE)
+
+add_subdirectory("${JUCE_PATH}" JUCE)
 
 juce_add_plugin(adLSpaceDubEcho
     COMPANY_NAME "adL"
