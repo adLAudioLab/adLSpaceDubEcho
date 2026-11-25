@@ -7,6 +7,8 @@ class TapeMachineLookAndFeel final : public juce::LookAndFeel_V4
 public:
     void drawRotarySlider (juce::Graphics&, int, int, int, int, float,
                            float, float, juce::Slider&) override;
+    void drawLinearSlider(juce::Graphics&, int, int, int, int, float, float, float, juce::Slider::SliderStyle, juce::Slider&) override {}
+    void drawButtonBackground(juce::Graphics&, juce::Button&, const juce::Colour&, bool, bool) override {}
 };
 
 class AdLSpaceDubEchoAudioProcessorEditor final : public juce::AudioProcessorEditor, private juce::Timer
@@ -24,11 +26,10 @@ private:
     juce::Label title;
     juce::Image facadeImage;
     juce::Image controlsLabelsImage;
-    juce::Image redLinesImage;
-    juce::Image vuLabelsImage;
+    juce::Image stripeImage, framesImage, meterImage, graduationsImage;
     juce::Image feedbackBoostOverlayImage;
-    static constexpr int designWidth = 1440;
-    static constexpr int designHeight = 720;
+    static constexpr int designWidth = 1774;
+    static constexpr int designHeight = 887;
     float vuDisplay = 0.0f;
     TapeMachineLookAndFeel vintageLookAndFeel;
     juce::Slider dubChaos;
