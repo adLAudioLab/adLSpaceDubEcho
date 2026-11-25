@@ -1,0 +1,32 @@
+﻿# Build directories
+build/
+build-*/
+cmake-build-*/
+
+# Visual Studio / MSVC
+.vs/
+*.obj
+*.pdb
+*.ilk
+*.idb
+*.ipch
+*.suo
+*.user
+
+# Generated binaries
+*.exe
+*.dll
+*.vst3
+*.lib
+*.exp
+
+# Temporary files
+*.tmp
+*.bak
+*~
+
+# Local archives
+old/
+
+# Unused GUI working files
+Gui/
