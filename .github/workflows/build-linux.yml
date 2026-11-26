@@ -30,15 +30,17 @@ jobs:
         run: |
           set -euo pipefail
           root="$PWD/build/adLSpaceDubEcho_artefacts/Release"
+          version=$(sed -nE "s/^project\(adLSpaceDubEcho VERSION ([0-9.]+).*/\1/p" CMakeLists.txt)
+          test -n "$version"
           mkdir -p packages
           test -d "$root/VST3/adLSpaceDubEcho.vst3"
           test -f "$root/CLAP/adLSpaceDubEcho.clap"
           test -x "$root/Standalone/adLSpaceDubEcho"
-          tar -czf packages/adLSpaceDubEcho_V0.1.16_Linux_x86_64_VST3.tar.gz -C "$root/VST3" adLSpaceDubEcho.vst3
-          tar -czf packages/adLSpaceDubEcho_V0.1.16_Linux_x86_64_CLAP.tar.gz -C "$root/CLAP" adLSpaceDubEcho.clap
-          tar -czf packages/adLSpaceDubEcho_V0.1.16_Linux_x86_64_Standalone.tar.gz -C "$root/Standalone" adLSpaceDubEcho
+          tar -czf packages/adLSpaceDubEcho_V${version}_Linux_x86_64_VST3.tar.gz -C "$root/VST3" adLSpaceDubEcho.vst3
+          tar -czf packages/adLSpaceDubEcho_V${version}_Linux_x86_64_CLAP.tar.gz -C "$root/CLAP" adLSpaceDubEcho.clap
+          tar -czf packages/adLSpaceDubEcho_V${version}_Linux_x86_64_Standalone.tar.gz -C "$root/Standalone" adLSpaceDubEcho
       - uses: actions/upload-artifact@v4
         with:
-          name: adLSpaceDubEcho_V0.1.16_Linux_x86_64
+          name: adLSpaceDubEcho_Linux_x86_64
           path: packages/*.tar.gz
           if-no-files-found: error
