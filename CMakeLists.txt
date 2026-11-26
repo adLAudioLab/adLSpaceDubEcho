@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(adLSpaceDubEcho VERSION 0.1.16 LANGUAGES C CXX)
+project(adLSpaceDubEcho VERSION 0.1.18 LANGUAGES C CXX)
 if(WIN32)
     set(_juce_default "C:/AudioDev/JUCE")
 else()
